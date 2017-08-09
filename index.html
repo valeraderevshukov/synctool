@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>chat</title>
+  </head>
+  <body>
+    <ul class="list"></ul>
+    <div class="form">
+      <textarea class="textarea" name="" id="" cols="30" rows="10"></textarea>
+      <div><button class="submit" type="button">submit</button></div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io('http://localhost:3000/');
+      document.querySelector('.submit')
+        .addEventListener('click', ev => {
+          ev.preventDefault();
+          let text = document.querySelector('.textarea').value;
+          socket.emit('massage', text);
+        });
+      socket.on('new massage', data => {
+        let li = document.createElement('li');
+        let list = document.querySelector('.list');
+        li.textContent = data;
+        li.classList.add('bla');
+
+        list.appendChild(li);
+
+      });
+    </script>
+  </body>
+</html>
